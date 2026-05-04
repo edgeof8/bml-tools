@@ -1,57 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edge Toolkit — Markdown & AI Utilities</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0d1117; color: #e6edf3; margin: 0; padding: 4rem 2rem;
-      display: flex; flex-direction: column; align-items: center; text-align: center;
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --success: #238636;
+      --hover: #1f6feb;
     }
-    h1 { font-size: 3rem; color: #58a6ff; margin-bottom: 0.5rem; }
-    .tagline { color: #8b949e; font-size: 1.2rem; margin-bottom: 3rem; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); margin: 0; padding: 4rem 2rem;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      line-height: 1.5;
+    }
+
+    h1 { font-size: 3.5rem; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: -1px; }
+    .tagline { color: var(--text-muted); font-size: 1.25rem; margin-bottom: 3.5rem; max-width: 600px; }
     
     .download-folder {
-      background: #161b22; border: 1px solid #30363d; border-radius: 8px;
-      padding: 1.5rem; margin-bottom: 4rem; max-width: 500px;
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 2rem; margin-bottom: 4rem; max-width: 550px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
+    .download-folder h3 { margin-top: 0; font-size: 1.4rem; }
     .download-folder a {
-      display: inline-block; background: #238636; color: white;
-      text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 6px;
-      font-weight: bold; margin-top: 1rem;
+      display: inline-block; background: var(--success); color: white;
+      text-decoration: none; padding: 0.9rem 2rem; border-radius: 6px;
+      font-weight: 600; margin-top: 1.2rem; transition: transform 0.2s, background 0.2s;
+    }
+    .download-folder a:hover { background: #2ea043; transform: translateY(-1px); }
+    
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+      gap: 2rem; 
+      width: 100%; 
+      max-width: 1100px; 
+    }
+
+    .tool-card {
+      background: var(--card-bg); 
+      border: 1px solid var(--border); 
+      border-radius: 12px;
+      padding: 2rem; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .tool-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .tool-card h3 { margin: 0 0 0.75rem 0; color: var(--text); font-size: 1.25rem; }
+    .tool-card p { 
+      color: var(--text-muted); 
+      font-size: 0.95rem; 
+      margin: 0 0 2rem 0; 
+      line-height: 1.6;
+      min-height: 3em;
     }
     
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; width: 100%; max-width: 900px; }
-    .tool-card {
-      background: #161b22; border: 1px solid #30363d; border-radius: 8px;
-      padding: 1.5rem; display: flex; flex-direction: column; align-items: center;
-    }
-    .tool-card h3 { margin: 0 0 0.5rem 0; color: #e6edf3; }
-    .tool-card p { color: #8b949e; font-size: 0.9rem; margin: 0 0 1.5rem 0; line-height: 1.4; }
     .bookmarklet {
-      display: inline-block; padding: 0.6rem 1.5rem; background: #1f6feb; color: #fff;
-      font-weight: bold; border-radius: 6px; text-decoration: none; cursor: grab;
+      display: inline-block; 
+      padding: 0.75rem 1.75rem; 
+      background: var(--hover); 
+      color: #fff;
+      font-weight: 600; 
+      border-radius: 6px; 
+      text-decoration: none; 
+      cursor: grab;
+      user-select: none;
+      transition: filter 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .bookmarklet:active { cursor: grabbing; }
+    .bookmarklet:hover { filter: brightness(1.1); }
+    
+    .drag-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-label {
+      color: #6e7681; 
+      margin: 4rem 0 2rem 0; 
+      text-transform: uppercase; 
+      font-size: 0.85rem; 
+      letter-spacing: 2px;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
 
   <h1>Edge Toolkit</h1>
-  <p class="tagline">Zero-install bookmarklets for PKM, Markdown, and AI workflows.</p>
+  <p class="tagline">A curated collection of zero-install bookmarklets designed for researchers, writers, and AI power users.</p>
 
   <div class="download-folder">
-    <h3>📦 Get the whole suite</h3>
-    <p style="color:#8b949e; font-size:0.9rem;">Download the bookmarks file and import it directly into Chrome, Safari, or Firefox to get the "Edge Toolkit" folder.</p>
+    <h3>📦 One-Click Bundle</h3>
+    <p style="color:var(--text-muted); font-size:0.95rem;">Download the bookmarks HTML file and import it into your browser to get the full "Edge Toolkit" folder instantly.</p>
     <a href="edge-bookmarks.html" download>Download Bookmarks File</a>
   </div>
 
-  <p style="color:#6e7681; margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Or drag individual tools</p>
+  <div class="section-label">Individual Tools</div>
 
   <div class="grid">
     <!-- INJECT_TOOLS_HERE -->
   </div>
+
+  <footer style="margin-top: 6rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); padding-top: 2rem; width: 100%; max-width: 400px;">
+    Built for speed & privacy. All processing happens in your browser.
+  </footer>
 
 </body>
 </html>

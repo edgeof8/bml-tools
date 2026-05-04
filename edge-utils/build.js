@@ -100,6 +100,7 @@ async function build() {
         <h3>${tool.name}</h3>
         <p>${tool.desc}</p>
         <a class="bookmarklet" href="${bookmarkletUrl}">${tool.name}</a>
+        <span class="drag-hint">Drag to bookmarks bar</span>
       </div>\n`;
     
     // 5. Add to the Bookmark Import File HTML chunk
