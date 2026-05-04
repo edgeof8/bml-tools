@@ -1,4 +1,4 @@
-# Edge Toolkit
+# BML Toolkit
 
 **10 beautiful, zero-install bookmarklets for researchers, writers, AI power users, and anyone who hates friction on the web.**
 
