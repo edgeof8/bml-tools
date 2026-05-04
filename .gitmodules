@@ -1,0 +1,30 @@
+[submodule "bttn"]
+	path = bttn
+	url = https://github.com/edgeof8/bttn.git
+[submodule "cite"]
+	path = cite
+	url = https://github.com/edgeof8/cite.git
+[submodule "md-memo"]
+	path = md-memo
+	url = https://github.com/edgeof8/md-memo.git
+[submodule "multi-peek"]
+	path = multi-peek
+	url = https://github.com/edgeof8/multi-peek.git
+[submodule "peek"]
+	path = peek
+	url = https://github.com/edgeof8/peek.git
+[submodule "reader"]
+	path = reader
+	url = https://github.com/edgeof8/reader.git
+[submodule "stats"]
+	path = stats
+	url = https://github.com/edgeof8/stats.git
+[submodule "toc"]
+	path = toc
+	url = https://github.com/edgeof8/toc.git
+[submodule "x-memo"]
+	path = x-memo
+	url = https://github.com/edgeof8/x-memo.git
+[submodule "yt-memo"]
+	path = yt-memo
+	url = https://github.com/edgeof8/yt-memo.git
