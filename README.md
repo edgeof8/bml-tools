@@ -8,7 +8,7 @@ All tools are **100% client-side**, **privacy-first**, and require **no extensio
 
 ## 🚀 Quick Start
 
-1. Go to [https://edgeof8.github.io/](https://edgeof8.github.io/bml-tools) (or open `index.html` locally)
+1. Go to [https://edgeof8.github.io/bml-tools/](https://edgeof8.github.io/bml-tools/) (or open `index.html` locally)
 2. Drag any tool button to your bookmarks bar
 3. Or download the **full bundle** → `edge-bookmarks.html` and import it into your browser
 
