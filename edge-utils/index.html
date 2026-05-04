@@ -1,6 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edge Toolkit — Markdown & AI Utilities</title>
+  <title>Edge Toolkit — 10 Zero-Install Bookmarklets</title>
+  <meta name="description" content="A curated collection of beautiful, privacy-first bookmarklets for researchers, writers, AI power users, and anyone who hates friction on the web.">
   <style>
     :root {
       --bg: #0d1117;
@@ -11,113 +15,428 @@
       --accent: #58a6ff;
       --success: #238636;
       --hover: #1f6feb;
+      --orange: #f85149;
+      --purple: #a371f7;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      background: var(--bg); color: var(--text); margin: 0; padding: 4rem 2rem;
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-      line-height: 1.5;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 3rem 1.5rem 6rem;
     }
 
-    h1 { font-size: 3.5rem; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: -1px; }
-    .tagline { color: var(--text-muted); font-size: 1.25rem; margin-bottom: 3.5rem; max-width: 600px; }
-    
-    .download-folder {
-      background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
-      padding: 2rem; margin-bottom: 4rem; max-width: 550px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
     }
-    .download-folder h3 { margin-top: 0; font-size: 1.4rem; }
-    .download-folder a {
-      display: inline-block; background: var(--success); color: white;
-      text-decoration: none; padding: 0.9rem 2rem; border-radius: 6px;
-      font-weight: 600; margin-top: 1.2rem; transition: transform 0.2s, background 0.2s;
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+      background: linear-gradient(90deg, #58a6ff, #a371f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
     }
-    .download-folder a:hover { background: #2ea043; transform: translateY(-1px); }
-    
-    .grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-      gap: 2rem; 
-      width: 100%; 
-      max-width: 1100px; 
+    .hero .tagline {
+      font-size: 1.35rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero .badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .badge {
+      background: #21262d;
+      color: #8b949e;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    /* Bundle */
+    .bundle {
+      background: linear-gradient(135deg, #161b22, #21262d);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.25rem 2.5rem;
+      margin-bottom: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .bundle-content { flex: 1; min-width: 280px; }
+    .bundle h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .bundle p { color: var(--text-muted); font-size: 1rem; }
+    .bundle .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--success);
+      color: white;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(35, 134, 54, 0.4);
+    }
+    .bundle .btn:hover { background: #2ea043; transform: translateY(-2px); }
+
+    /* Tools Grid */
+    .section-label {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #6e7681;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
     }
 
     .tool-card {
-      background: var(--card-bg); 
-      border: 1px solid var(--border); 
-      border-radius: 12px;
-      padding: 2rem; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center;
-      transition: border-color 0.3s, transform 0.3s;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
     }
-    .tool-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-    .tool-card h3 { margin: 0 0 0.75rem 0; color: var(--text); font-size: 1.25rem; }
-    .tool-card p { 
-      color: var(--text-muted); 
-      font-size: 0.95rem; 
-      margin: 0 0 2rem 0; 
-      line-height: 1.6;
-      min-height: 3em;
-    }
-    
-    .bookmarklet {
-      display: inline-block; 
-      padding: 0.75rem 1.75rem; 
-      background: var(--hover); 
-      color: #fff;
-      font-weight: 600; 
-      border-radius: 6px; 
-      text-decoration: none; 
-      cursor: grab;
-      user-select: none;
-      transition: filter 0.2s;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .bookmarklet:active { cursor: grabbing; }
-    .bookmarklet:hover { filter: brightness(1.1); }
-    
-    .drag-hint {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(88, 166, 255, 0.1);
     }
 
-    .section-label {
-      color: #6e7681; 
-      margin: 4rem 0 2rem 0; 
-      text-transform: uppercase; 
-      font-size: 0.85rem; 
-      letter-spacing: 2px;
-      font-weight: 600;
+    .tool-card .icon {
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+      line-height: 1;
     }
+
+    .tool-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .tool-card .desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .tool-card .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: #6e7681;
+      margin-bottom: 1.25rem;
+    }
+
+    .tool-card .actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .bookmarklet {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.1rem;
+      background: #238636;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1px solid #2ea043;
+      cursor: grab;
+      user-select: none;
+    }
+    .bookmarklet:hover {
+      background: #2ea043;
+      box-shadow: 0 0 20px rgba(46, 160, 67, 0.5);
+    }
+    .bookmarklet:active { cursor: grabbing; transform: scale(0.97); }
+
+    .tool-link {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.1rem;
+      background: transparent;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .tool-link:hover {
+      background: #21262d;
+      border-color: var(--accent);
+    }
+
+    .footer {
+      margin-top: 5rem;
+      text-align: center;
+      color: #6e7681;
+      font-size: 0.9rem;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
+  <div class="container">
 
-  <h1>Edge Toolkit</h1>
-  <p class="tagline">A curated collection of zero-install bookmarklets designed for researchers, writers, and AI power users.</p>
+    <!-- Hero -->
+    <div class="hero">
+      <h1>Edge Toolkit</h1>
+      <p class="tagline">10 beautiful, zero-install bookmarklets.<br>Built for researchers, writers, and power users who hate friction.</p>
+      
+      <div class="badges">
+        <span class="badge">100% Client-Side</span>
+        <span class="badge">Privacy-First</span>
+        <span class="badge">No Extensions</span>
+        <span class="badge">No Accounts</span>
+      </div>
+    </div>
 
-  <div class="download-folder">
-    <h3>📦 One-Click Bundle</h3>
-    <p style="color:var(--text-muted); font-size:0.95rem;">Download the bookmarks HTML file and import it into your browser to get the full "Edge Toolkit" folder instantly.</p>
-    <a href="edge-bookmarks.html" download>Download Bookmarks File</a>
+    <!-- Bundle -->
+    <div class="bundle">
+      <div class="bundle-content">
+        <h3>📦 One-Click Install — All 10 Tools</h3>
+        <p>Download the bookmarks HTML file and import it into your browser. Get the entire Edge Toolkit folder instantly.</p>
+      </div>
+      <a href="edge-bookmarks.html" download class="btn">
+        ⬇️ Download Bookmarks File
+      </a>
+    </div>
+
+    <!-- Tools -->
+    <div class="section-label">The Tools</div>
+    
+    <div class="grid">
+
+      <!-- bttn -->
+      <div class="tool-card">
+        <div class="icon">📋</div>
+        <h3>bttn</h3>
+        <p class="desc">Copy any AI conversation (Claude, ChatGPT, Grok, AI Studio) to clean Markdown with one click.</p>
+        <div class="meta"><span>AI Chats</span> • <span>Markdown</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/bttn/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('bttn'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- cite -->
+      <div class="tool-card">
+        <div class="icon">📚</div>
+        <h3>cite</h3>
+        <p class="desc">One-click academic citations in APA, MLA, Chicago, BibTeX, and Plain Text from any webpage.</p>
+        <div class="meta"><span>Citations</span> • <span>5 Formats</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/cite/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('cite'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- md-memo -->
+      <div class="tool-card">
+        <div class="icon">📝</div>
+        <h3>md-memo</h3>
+        <p class="desc">Save any article or blog post as clean Markdown with YAML frontmatter — ready for Obsidian or Notion.</p>
+        <div class="meta"><span>Articles</span> • <span>YAML</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/md-memo/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('md-memo'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- multi-peek -->
+      <div class="tool-card">
+        <div class="icon">🗂️</div>
+        <h3>multi-peek</h3>
+        <p class="desc">Choose from multiple archiving services (archive.is, Wayback Machine, etc.) to bypass paywalls.</p>
+        <div class="meta"><span>Archives</span> • <span>Multi</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/multi-peek/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('multi-peek'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- peek -->
+      <div class="tool-card">
+        <div class="icon">🔍</div>
+        <h3>peek</h3>
+        <p class="desc">Instantly redirect any page to archive.is/latest/ — bypass paywalls and recover deleted content.</p>
+        <div class="meta"><span>Paywalls</span> • <span>Archive</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/peek/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('peek'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- reader -->
+      <div class="tool-card">
+        <div class="icon">📖</div>
+        <h3>reader</h3>
+        <p class="desc">Distraction-free reading mode. Strips ads, sidebars, and clutter for a clean, Kindle-like experience.</p>
+        <div class="meta"><span>Reading</span> • <span>Clean</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/reader/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('reader'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- stats -->
+      <div class="tool-card">
+        <div class="icon">📊</div>
+        <h3>stats</h3>
+        <p class="desc">Instant page statistics: word count, reading time, heading structure, link density, and more.</p>
+        <div class="meta"><span>Analytics</span> • <span>Insights</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/stats/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('stats'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- toc -->
+      <div class="tool-card">
+        <div class="icon">📑</div>
+        <h3>toc</h3>
+        <p class="desc">Generate a beautiful, standalone Table of Contents page from any long article or documentation.</p>
+        <div class="meta"><span>Navigation</span> • <span>Long-form</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/toc/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('toc'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- x-memo -->
+      <div class="tool-card">
+        <div class="icon">🐦</div>
+        <h3>x-memo</h3>
+        <p class="desc">Export any X/Twitter thread to clean Markdown with YAML frontmatter — perfect for your second brain.</p>
+        <div class="meta"><span>Threads</span> • <span>X/Twitter</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/x-memo/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('x-memo'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- yt-memo -->
+      <div class="tool-card">
+        <div class="icon">▶️</div>
+        <h3>yt-memo</h3>
+        <p class="desc">Turn any YouTube video into Markdown with title, chapters, description, and full transcript.</p>
+        <div class="meta"><span>Video</span> • <span>Transcript</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/yt-memo/" class="tool-link">Visit page</a>
+          <a href="#" class="bookmarklet" onclick="copyBookmarklet('yt-memo'); return false;">Drag to bar</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Built with ❤️ for the open web. All processing happens in your browser.<br>
+      <a href="https://github.com/edgeof8">github.com/edgeof8</a> &nbsp;·&nbsp; 
+      <a href="https://github.com/edgeof8/edge-utils">Source on GitHub</a>
+    </div>
+
   </div>
 
-  <div class="section-label">Individual Tools</div>
+  <script>
+    // Simple copy helper for demo bookmarklets (in real deployment these would be the real minified loaders)
+    const bookmarkletLoaders = {
+      'bttn': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/bttn/bttn.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'cite': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/cite/cite.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'md-memo': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/md-memo/md-memo.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'multi-peek': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/multi-peek/multi-peek.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'peek': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/peek/peek.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'reader': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/reader/reader.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'stats': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/stats/stats.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'toc': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/toc/toc.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'x-memo': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/x-memo/x-memo.js?v=\'+Date.now();document.body.appendChild(s);})();',
+      'yt-memo': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/yt-memo/yt-memo.js?v=\'+Date.now();document.body.appendChild(s);})();'
+    };
 
-  <div class="grid">
-    <!-- INJECT_TOOLS_HERE -->
-  </div>
+    function copyBookmarklet(tool) {
+      const code = bookmarkletLoaders[tool];
+      if (!code) return;
+      
+      navigator.clipboard.writeText(code).then(() => {
+        const btns = document.querySelectorAll('.bookmarklet');
+        btns.forEach(b => {
+          if (b.textContent.includes('Drag')) {
+            const orig = b.textContent;
+            b.textContent = '✓ Copied!';
+            b.style.background = '#2ea043';
+            setTimeout(() => {
+              b.textContent = orig;
+              b.style.background = '#238636';
+            }, 1400);
+          }
+        });
+      }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        alert('Bookmarklet code copied! Paste it as the URL of a new bookmark.');
+      });
+    }
 
-  <footer style="margin-top: 6rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border); padding-top: 2rem; width: 100%; max-width: 400px;">
-    Built for speed & privacy. All processing happens in your browser.
-  </footer>
-
+    // Easter egg: Konami code for fun
+    let konami = '';
+    document.addEventListener('keydown', e => {
+      konami += e.key;
+      if (konami.length > 10) konami = konami.slice(-10);
+      if (konami === 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba') {
+        document.body.style.transition = 'filter 0.6s';
+        document.body.style.filter = 'hue-rotate(180deg)';
+        setTimeout(() => document.body.style.filter = '', 1200);
+        konami = '';
+      }
+    });
+  </script>
 </body>
 </html>
