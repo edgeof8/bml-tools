@@ -1,0 +1,93 @@
+[
+  {
+    "id": "bttn",
+    "title": "📋 AI Chat Exporter (bttn)",
+    "path": "../bttn/bttn.js"
+  },
+  {
+    "id": "cite",
+    "title": "📚 Citation Generator (cite)",
+    "path": "../cite/cite.js"
+  },
+  {
+    "id": "dark",
+    "title": "🌙 Dark Mode Toggle (dark)",
+    "path": "../dark/dark.js"
+  },
+  {
+    "id": "highlight-memo",
+    "title": "🖍️ Highlight Collector (highlight-memo)",
+    "path": "../highlight-memo/highlight-memo.js"
+  },
+  {
+    "id": "links",
+    "title": "🔗 Link Extractor (links)",
+    "path": "../links/links.js"
+  },
+  {
+    "id": "llm-prep",
+    "title": "🤖 LLM Prompt Prep (llm-prep)",
+    "path": "../llm-prep/llm-prep.js"
+  },
+  {
+    "id": "md-memo",
+    "title": "📝 Page to Markdown (md-memo)",
+    "path": "../md-memo/md-memo.js"
+  },
+  {
+    "id": "multi-peek",
+    "title": "🗂️ Multi‑Archive (multi-peek)",
+    "path": "../multi-peek/multi-peek.js"
+  },
+  {
+    "id": "peek",
+    "title": "🔍 Archive Bypass (peek)",
+    "path": "../peek/peek.js"
+  },
+  {
+    "id": "quote",
+    "title": "💬 Quote Capture (quote)",
+    "path": "../quote/quote.js"
+  },
+  {
+    "id": "reader",
+    "title": "📖 Reader Mode (reader)",
+    "path": "../reader/reader.js"
+  },
+  {
+    "id": "reddit-memo",
+    "title": "🟠 Reddit Exporter (reddit-memo)",
+    "path": "../reddit-memo/reddit-memo.js"
+  },
+  {
+    "id": "schema-peek",
+    "title": "🔍 Schema Peek (schema-peek)",
+    "path": "../schema-peek/schema-peek.js"
+  },
+  {
+    "id": "stats",
+    "title": "📊 Page Stats (stats)",
+    "path": "../stats/stats.js"
+  },
+  {
+    "id": "table-memo",
+    "title": "🗃️ Table to Markdown (table-memo)",
+    "path": "../table-memo/table-memo.js"
+  },
+  {
+    "id": "toc",
+    "title": "📑 Table of Contents (toc)",
+    "path": "../toc/toc.js"
+  },
+  {
+    "id": "x-memo",
+    "title": "🐦 X/Twitter Thread Export (x-memo)",
+    "path": "../x-memo/x-memo.js"
+  },
+  {
+    "id": "yt-memo",
+    "title": "📺 YouTube Memo (yt-memo)",
+    "path": "../yt-memo/yt-memo.js"
+  }
+]
+
