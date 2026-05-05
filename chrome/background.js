@@ -1,13 +1,13 @@
 // Load script definitions from a JSON manifest and fetch their source code.
-// The JSON file lives inside the extension (chrome/tools.json) and lists each
-// script with an id, a human‑readable title and a relative path to the actual
-// JavaScript implementation that lives in the main repository (e.g. "../md-memo/md-memo.js").
-// On installation we read this manifest, fetch every script file, and store the
-// resulting array in chrome.storage.local under the key "scripts". The stored
-// objects contain the raw code string so that the options page can edit it.
+// The manifest lives at `chrome/tools.json` and contains an array of objects:
+// `{ id, title, path }` where `path` is relative to the extension folder.
+// During installation we read the manifest, fetch each script file, and store
+// the resulting objects (including the raw JavaScript source) under the key
+// `scripts` in chrome.storage.local. This makes the scripts editable via the
+// options page.
 const TOOLS_MANIFEST = "tools.json";
 
-/** Fetch the tools manifest and then load each script's source code. */
+/** Retrieve the manifest and load the actual script contents. */
 async function loadDefaultScripts() {
   const manifestUrl = chrome.runtime.getURL(TOOLS_MANIFEST);
   const resp = await fetch(manifestUrl);
@@ -25,6 +25,9 @@ async function loadDefaultScripts() {
   }
   return scripts;
 }
+
+// Placeholder that will be populated on first install.
+let DEFAULT_SCRIPTS = [];
 
 // Initialize and build the Context Menu
 async function buildContextMenu() {
@@ -49,11 +52,19 @@ async function buildContextMenu() {
   });
 }
 
-// Run when the extension is installed or updated
+// Run when the extension is installed or updated. On a fresh install we load the
+// script definitions from `tools.json` (via `loadDefaultScripts`) and store them
+// in chrome.storage.local. Subsequent updates keep the user's custom scripts.
 chrome.runtime.onInstalled.addListener(async () => {
-  const data = await chrome.storage.local.get("scripts");
-  if (!data.scripts) {
-    await chrome.storage.local.set({ scripts: DEFAULT_SCRIPTS });
+  const { scripts } = await chrome.storage.local.get("scripts");
+  if (!scripts) {
+    const defaults = await loadDefaultScripts();
+    // Populate the placeholder so the rest of the code can rely on it.
+    DEFAULT_SCRIPTS = defaults;
+    await chrome.storage.local.set({ scripts: defaults });
+  } else {
+    // Ensure the in‑memory placeholder reflects whatever is stored.
+    DEFAULT_SCRIPTS = scripts;
   }
   buildContextMenu();
 });
