@@ -17,14 +17,17 @@ async function loadDefaultScripts() {
   for (const entry of entries) {
     try {
       // All script files are packaged within the extension (e.g., "bttn/bttn.js").
-      // Using chrome.runtime.getURL ensures we load the local copy, avoiding
-      // network requests and 404 errors.
+      // Using chrome.runtime.getURL ensures we load the local copy. If the file
+      // is missing (e.g., because submodules are not bundled), we fall back to a
+      // minimal placeholder that alerts the user.
       const codeUrl = chrome.runtime.getURL(entry.path);
       const codeResp = await fetch(codeUrl);
       const code = await codeResp.text();
       scripts.push({ id: entry.id, title: entry.title, code });
     } catch (e) {
       console.error('Failed to load script', entry.id, e);
+      const placeholder = `alert('Script ${entry.id} not available in extension package');`;
+      scripts.push({ id: entry.id, title: entry.title, code: placeholder });
     }
   }
   return scripts;
