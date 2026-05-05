@@ -9,19 +9,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let currentScripts = [];
 
-  // Shared default scripts for reset/init
-  const DEFAULT_SCRIPTS = [
-    {
-      id: "yt-memo",
-      title: "📺 YouTube to Memo (yt-memo)",
-      code: `(function () { 'use strict'; /* yt-memo implementation */ })();`
-    },
-    {
-      id: "highlight-memo",
-      title: "🖍️ Multi-Highlight Collector (highlight-memo)",
-      code: `(function () { 'use strict'; /* highlight-memo implementation */ })();`
-    }
-  ];
+  // No hard‑coded defaults – the background script populates storage on first
+  // install using `chrome/tools.json`. We fall back to an empty array here.
+  const DEFAULT_SCRIPTS = [];
 
   // Load and render scripts
   async function loadScripts() {
