@@ -1,17 +1,30 @@
-// Default tools that come pre-installed
-const DEFAULT_SCRIPTS =[
-  {
-    id: "md-memo",
-    title: "📝 Extract Page to Markdown (md-memo)",
-    // Example: Replace this string with your actual minified bookmarklet code
-    code: "alert('md-memo: Page converted to Markdown!');" 
-  },
-  {
-    id: "yt-memo",
-    title: "📺 YouTube to Memo (yt-memo)",
-    code: "alert('yt-memo: Video data extracted!');"
+// Load script definitions from a JSON manifest and fetch their source code.
+// The JSON file lives inside the extension (chrome/tools.json) and lists each
+// script with an id, a human‑readable title and a relative path to the actual
+// JavaScript implementation that lives in the main repository (e.g. "../md-memo/md-memo.js").
+// On installation we read this manifest, fetch every script file, and store the
+// resulting array in chrome.storage.local under the key "scripts". The stored
+// objects contain the raw code string so that the options page can edit it.
+const TOOLS_MANIFEST = "tools.json";
+
+/** Fetch the tools manifest and then load each script's source code. */
+async function loadDefaultScripts() {
+  const manifestUrl = chrome.runtime.getURL(TOOLS_MANIFEST);
+  const resp = await fetch(manifestUrl);
+  const entries = await resp.json(); // [{id, title, path}]
+  const scripts = [];
+  for (const entry of entries) {
+    try {
+      const codeUrl = chrome.runtime.getURL(entry.path);
+      const codeResp = await fetch(codeUrl);
+      const code = await codeResp.text();
+      scripts.push({ id: entry.id, title: entry.title, code });
+    } catch (e) {
+      console.error('Failed to load script', entry.id, e);
+    }
   }
-];
+  return scripts;
+}
 
 // Initialize and build the Context Menu
 async function buildContextMenu() {
