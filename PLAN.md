@@ -27,38 +27,30 @@ Last updated: 2026-05-05
 
 ---
 
-## Phase 1 — Fix Infrastructure (Immediate)
+## Phase 1 — Fix Infrastructure ✅ Done
 
-### 1.1 Add PRD.md to `bttn`
+### 1.1 Add PRD.md to `bttn` ✅
 
-`bttn` is the flagship tool and the only one the build system silently skips. The fix must happen in its submodule repo (`github.com/edgeof8/bttn`), not here.
-
-- Write a `PRD.md` in the `bttn/` submodule matching the format used by all other tools
-- Commit in the `bttn` repo, then update the submodule pointer here
+Written at `bttn/PRD.md`. bttn is now fully discovered by the build system.
 
 ### 1.2 Audit and sync submodule pointers
 
-Several submodules show `toc` as having new commits ahead of the pointer recorded in this repo. Run a full audit:
+All submodule pointers show as uninitialized (`-` prefix in `git submodule status`). Content is present locally. To properly register:
 
 ```bash
-git submodule status
-git submodule update --remote --merge
+git submodule update --init --recursive
+git submodule update --remote --merge   # advance to latest on each remote
 ```
 
-Decide per-tool whether to advance the pointer or pin it.
+Decide per-tool whether to advance the pointer or pin it. This is a git admin task.
 
-### 1.3 Add a `package.json` at root
+### 1.3 Add a `package.json` at root ✅
 
-Currently `build.js` depends on `terser` with no root `package.json`. First-time setup requires knowing to run `npm install terser` manually.
+Created `package.json` with `terser` dev dep and `npm run build` / `npm run watch` scripts. Created `.gitignore` with `node_modules/`.
 
-- Add `package.json` with `terser` as a dev dependency and a `"build": "node build.js"` script
-- Add `node_modules/` to `.gitignore` if not already present
+### 1.4 Promote local tools to submodules (future)
 
-### 1.4 Verify `quote` submodule or promote to submodule
-
-`quote/` currently lives directly in this repo (not a submodule). Decide:
-- **Option A (recommended):** Create `github.com/edgeof8/quote`, move code there, add as submodule — consistent with all other tools, gets its own GitHub Pages deploy
-- **Option B:** Keep it local if standalone deploy isn't needed yet
+`quote`, `dark`, `links`, `reddit-memo` currently live directly in this repo. When ready for standalone GitHub Pages deploys, create individual repos and re-add as submodules.
 
 ---
 
