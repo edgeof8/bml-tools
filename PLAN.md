@@ -76,53 +76,33 @@ Each tool should be reviewed against these standards before being considered sta
 
 ## Phase 3 — New Tools
 
-Candidates ranked by fit with the existing audience (researchers, writers, PKM users):
+### 3.1 `reddit-memo` ✅ Built
 
-### 3.1 `reddit-memo` — Export Reddit threads to Markdown
-
-Mirror of `x-memo` for Reddit. Exports post + top-level comments as Markdown with YAML frontmatter. Reddit's DOM is far more stable than X's, so this is tractable.
-
-```markdown
----
-title: "Thread title"
-subreddit: r/MachineLearning
-author: u/username
-source: "https://reddit.com/r/..."
-clipped: 2026-05-05
----
-
-**u/username** · 42 points
-
-> The main argument here is...
-
-**u/replier** · 18 points
-
-> I disagree because...
-```
+`reddit-memo/` added. Handles new Reddit (`shreddit-comment`) and old Reddit (`.thing.comment`). Extracts post + full nested comment tree with depth-based indentation.
 
 ### 3.2 `gh-memo` — Export GitHub issues / PRs / discussions to Markdown
 
 Extracts issue body + comment thread from any `github.com/*/issues/*` or `*/pull/*` URL. Useful for developers tracking decisions made in issues, and for feeding context into AI tools.
 
-### 3.3 `links` — Extract all links from a page as a Markdown list
+**Key selectors to target:**
+- Issue body: `[data-target="issue-body.rendered"]`
+- PR description: `.comment-body` on first `.timeline-comment`
+- Comments: `.timeline-comment .comment-body`
+- Author: `.author` link within each comment block
 
-Produces a deduplicated, sorted list of all external links on a page — with link text and URL — copied as Markdown. Useful for link roundups, research bibliographies, and site audits.
+### 3.3 `links` ✅ Built
 
-```markdown
-## Links from: Example Article
-
-- [Paper: Attention Is All You Need](https://arxiv.org/abs/1706.03762)
-- [Stanford NLP Group](https://nlp.stanford.edu)
-...
-```
+`links/` added. Extracts all external links, deduplicates by canonical URL, outputs YAML + Markdown list. Skips `javascript:`, `mailto:`, `tel:` and same-host links.
 
 ### 3.4 `pdf-memo` — Extract text from browser-rendered PDFs
 
 When a PDF is open in Chrome/Firefox's built-in viewer, extract the visible text layer as Markdown with YAML metadata. Simpler than it sounds — the text layer is in the DOM under `.page` elements in Chrome's viewer.
 
-### 3.5 `dark` — Toggle dark mode on any site
+**Chrome PDF viewer selectors:** `embed[type="application/pdf"]` wraps the viewer; text spans live under `#viewer .page .textLayer span`.
 
-Injects a CSS filter (`invert(1) hue-rotate(180deg)`) as a toggle on any page. Lighter alternative to reader mode for sites with good layout but bad contrast. Extremely small (< 200 B minified).
+### 3.5 `dark` ✅ Built
+
+`dark/` added. CSS `invert(1) hue-rotate(180deg)` toggle on `<html>`, with counter-invert on `img, video, canvas, iframe, svg, picture`. State tracked via data attribute for SPA persistence.
 
 ---
 
