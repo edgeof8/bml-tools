@@ -9,13 +9,18 @@ const TOOLS_MANIFEST = "tools.json";
 
 /** Retrieve the manifest and load the actual script contents. */
 async function loadDefaultScripts() {
+  // The manifest is packaged with the extension, so we can read it locally.
   const manifestUrl = chrome.runtime.getURL(TOOLS_MANIFEST);
   const resp = await fetch(manifestUrl);
   const entries = await resp.json(); // [{id, title, path}]
   const scripts = [];
+  const REMOTE_BASE = 'https://raw.githubusercontent.com/edgeof8/bml-tools/main/';
   for (const entry of entries) {
     try {
-      const codeUrl = chrome.runtime.getURL(entry.path);
+      // Scripts live outside the extension folder, so we fetch them from the
+      // public GitHub repository. This avoids packaging every tool file inside
+      // the extension while still delivering the latest code.
+      const codeUrl = REMOTE_BASE + entry.path;
       const codeResp = await fetch(codeUrl);
       const code = await codeResp.text();
       scripts.push({ id: entry.id, title: entry.title, code });
