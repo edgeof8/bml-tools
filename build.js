@@ -5,6 +5,8 @@ const { minify } = require('terser');
 const { execSync } = require('child_process');
 
 const BASE_URL = 'https://edgeof8.github.io';
+const SIZE_WARN_KB = 8;   // warn if minified bookmarklet exceeds this
+const WATCH_MODE = process.argv.includes('--watch');
 
 async function build() {
   console.log('🏗️  Edge Toolkit: Master Builder Starting...');
@@ -94,6 +96,12 @@ async function build() {
 
     const bookmarkletUrl = `javascript:(function(){${safeCode}})();`;
 
+    // Size budget check
+    const sizeKb = bookmarkletUrl.length / 1024;
+    if (sizeKb > SIZE_WARN_KB) {
+      console.warn(`⚠️  ${tool.name} is ${sizeKb.toFixed(1)} KB — consider splitting via remote loader`);
+    }
+
     // Loader URL for remote delivery (stays tiny, always fetches latest)
     const loaderUrl = `javascript:(function(){var s=document.createElement('script');s.src='${BASE_URL}/${tool.id}/${tool.id}.js?v='+Date.now();document.body.appendChild(s);})()`;
 
@@ -128,7 +136,7 @@ async function build() {
 
     bookmarkFolderHtml += `        <DT><A HREF="${bookmarkletUrl}">${tool.name}</A>\n`;
 
-    console.log(`✅ Built: ${tool.name} (${(bookmarkletUrl.length / 1024).toFixed(2)} kb)`);
+    console.log(`✅ Built: ${tool.name} (${sizeKb.toFixed(2)} KB)`);
   }
 
   bookmarkFolderHtml += `    </DL><p>\n</DL><p>`;
@@ -151,4 +159,47 @@ async function build() {
   console.log('🚀 Build complete!');
 }
 
-build();
+// ── Watch mode ──────────────────────────────────────────────────────────────
+if (WATCH_MODE) {
+  console.log('👀 Watch mode active — watching tool JS files for changes...\n');
+
+  let debounceTimer = null;
+  const rebuild = () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      console.log('\n🔄 Change detected — rebuilding...\n');
+      build().catch(err => console.error('❌ Build error:', err.message));
+    }, 300);
+  };
+
+  // Initial build
+  build().then(() => {
+    // Watch each tool folder for .js changes
+    const toolDirs = fs.readdirSync(__dirname, { withFileTypes: true })
+      .filter(d => d.isDirectory() && !d.name.startsWith('.') && d.name !== 'node_modules')
+      .map(d => d.name);
+
+    for (const dir of toolDirs) {
+      const jsPath = path.join(__dirname, dir, `${dir}.js`);
+      if (fs.existsSync(jsPath)) {
+        fs.watch(jsPath, rebuild);
+      }
+    }
+
+    // Also watch tools.json and template.html
+    for (const f of ['tools.json', 'template.html']) {
+      const fp = path.join(__dirname, f);
+      if (fs.existsSync(fp)) fs.watch(fp, rebuild);
+    }
+
+    console.log('\n👀 Watching. Press Ctrl+C to stop.');
+  }).catch(err => {
+    console.error('❌ Initial build failed:', err.message);
+    process.exit(1);
+  });
+} else {
+  build().catch(err => {
+    console.error('❌ Build failed:', err.message);
+    process.exit(1);
+  });
+}
