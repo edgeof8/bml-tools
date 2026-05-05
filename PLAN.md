@@ -6,17 +6,20 @@ Last updated: 2026-05-05
 
 ## Current State
 
-11 tools. 10 are git submodules under `github.com/edgeof8/`. `quote` lives directly in this repo as the newest addition.
+14 tools. 10 are git submodules under `github.com/edgeof8/`. `quote`, `dark`, `links`, and `reddit-memo` live directly in this repo.
 
 | Tool | Source JS | PRD.md | Build-discoverable |
 |---|---|---|---|
-| bttn | bttn.js (5 KB) | ❌ missing | ❌ not built |
+| bttn | bttn.js (5 KB) | ✅ added | ✅ |
 | cite | cite.js (14 KB) | ✅ | ✅ |
+| dark | dark.js (< 1 KB) | ✅ new | ✅ |
+| links | links.js (< 2 KB) | ✅ new | ✅ |
 | md-memo | md-memo.js (4 KB) | ✅ | ✅ |
 | multi-peek | multi-peek.js (4 KB) | ✅ | ✅ |
 | peek | peek.js (340 B) | ✅ | ✅ |
 | quote | quote.js (4 KB) | ✅ | ✅ |
 | reader | reader.js (7 KB) | ✅ | ✅ |
+| reddit-memo | reddit-memo.js (< 3 KB) | ✅ new | ✅ |
 | stats | stats.js (15 KB) | ✅ | ✅ |
 | toc | toc.js (5 KB) | ✅ | ✅ |
 | x-memo | x-memo.js (9 KB) | ✅ | ✅ |
