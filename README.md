@@ -22,11 +22,14 @@ All tools are **100% client-side**, **privacy-first**, and require **no extensio
 |------------|------------------------------------------------------------------------------|---------------------------|
 | **bttn**   | Copy any AI conversation (Claude, ChatGPT, Grok, Google AI Studio) to clean Markdown | AI workflows, note-taking |
 | **cite**   | One-click academic citations (APA 7, MLA 9, Chicago, BibTeX, Plain) from any page | Students, researchers     |
+| **dark**   | Toggle dark mode on any website — images stay natural, one click on/off      | Low-light browsing        |
+| **links**  | Extract all external links from any page as a deduplicated Markdown list     | Research, link roundups   |
 | **md-memo**| Save any article or blog post as clean Markdown + YAML frontmatter          | PKM (Obsidian/Notion)     |
 | **multi-peek** | Choose from multiple archives (archive.is, Wayback, archive.ph, etc.) to bypass paywalls | Researchers, journalists  |
 | **peek**   | Instant redirect to `archive.is/latest/` for paywalled or deleted content    | Quick archive access      |
 | **quote**  | Capture selected text as a Markdown blockquote with YAML citation metadata   | Researchers, annotators   |
 | **reader** | Distraction-free reading mode — strips ads, sidebars, popups for clean view  | Long-form reading         |
+| **reddit-memo** | Export any Reddit thread — post + nested comments — to clean Markdown   | Community research        |
 | **stats**  | Instant page statistics: word count, reading time, headings, links, images   | Writers, editors          |
 | **toc**    | Generate a beautiful standalone Table of Contents page from any long article | Documentation, research   |
 | **x-memo** | Export any X/Twitter thread to clean Markdown with YAML frontmatter          | Social research, threads  |
