@@ -66,13 +66,13 @@ All tools use **remote loaders** — the bookmarklet itself stays tiny and alway
 
 ## Development
 
-The project uses a simple build system:
-
 ```bash
-node build.js
+npm install          # install terser (first time only)
+npm run build        # one-off build
+npm run watch        # rebuild on every .js change
 ```
 
-This:
+`node build.js` directly also works. The build:
 - Discovers all tools (folders with `PRD.md`)
 - Minifies the main JS file
 - Updates each tool's `index.html` with the fresh bookmarklet
