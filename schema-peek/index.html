@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>schema-peek — JSON-LD Inspector | Edge Toolkit</title>
+  <meta name="description" content="Reveal hidden JSON-LD / Schema.org metadata on any webpage. See the structured data behind articles, recipes, products, and events.">
+  <style>
+    :root {
+      --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
+      --text: #e6edf3; --text-muted: #8b949e;
+      --accent: #58a6ff; --success: #238636; --purple: #a371f7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.6; padding: 3rem 1.5rem 6rem;
+    }
+    .container { max-width: 760px; margin: 0 auto; }
+    .back { color: var(--accent); text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 2rem; }
+    .back:hover { text-decoration: underline; }
+    .hero { text-align: center; margin-bottom: 3rem; }
+    .hero .icon { font-size: 4rem; margin-bottom: 1rem; }
+    .hero h1 {
+      font-size: 3.2rem; font-weight: 800; letter-spacing: -2px;
+      background: linear-gradient(90deg, #58a6ff, #a371f7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+    }
+    .hero .tagline { font-size: 1.2rem; color: var(--text-muted); max-width: 520px; margin: 0 auto 2rem; }
+    .install {
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2.5rem; margin-bottom: 3rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .install p { color: var(--text-muted); font-size: 0.95rem; text-align: center; max-width: 420px; }
+    .bookmarklet {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 1rem 2.25rem; background: var(--success); color: #fff;
+      font-weight: 700; font-size: 1.15rem; border-radius: 10px;
+      text-decoration: none; border: 1px solid #2ea043;
+      cursor: grab; user-select: none; transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(35, 134, 54, 0.4);
+    }
+    .bookmarklet:hover { background: #2ea043; transform: translateY(-2px); }
+    .bookmarklet:active { cursor: grabbing; transform: scale(0.97); }
+    .steps {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.75rem; margin-bottom: 2.5rem;
+    }
+    .steps h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .step { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; }
+    .step:last-child { margin-bottom: 0; }
+    .step-num {
+      width: 1.75rem; height: 1.75rem; border-radius: 50%; background: #21262d;
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--accent); flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .step-text { color: var(--text-muted); font-size: 0.95rem; }
+    .step-text strong { color: var(--text); }
+    .example {
+      background: #0d1117; border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem; margin-bottom: 2.5rem; overflow-x: auto;
+    }
+    .example h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1rem; }
+    .example pre {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.82rem; color: #e6edf3; line-height: 1.6;
+    }
+    .k { color: #79c0ff; } .v { color: #a5d6ff; } .s { color: #a8daff; }
+    .features {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem; margin-bottom: 2.5rem;
+    }
+    .feature { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+    .feature .fi { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .feature h3 { font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .feature p { font-size: 0.8rem; color: var(--text-muted); }
+    .footer { text-align: center; color: #6e7681; font-size: 0.85rem; margin-top: 3rem; }
+    .footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../" class="back">← Edge Toolkit</a>
+
+    <div class="hero">
+      <div class="icon">🔍</div>
+      <h1>schema-peek</h1>
+      <p class="tagline">Reveal the hidden JSON-LD metadata that search engines read but you never see.</p>
+    </div>
+
+    <div class="install">
+      <p>Drag this button to your bookmarks bar. Then visit any article, recipe, or product page and click it.</p>
+      <a href="#" class="bookmarklet" id="bm">🔍 schema-peek</a>
+      <p style="font-size:0.8rem;">Or click to copy the bookmarklet code, then create a new bookmark and paste it as the URL.</p>
+    </div>
+
+    <div class="steps">
+      <h2>How it works</h2>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Visit any page</strong> — articles, recipes, products, and events often embed rich metadata.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Click schema-peek</strong> — an inspector panel opens showing all JSON-LD blocks found.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Copy any block</strong> — individual or all-at-once, formatted JSON ready to use.</div>
+      </div>
+    </div>
+
+    <div class="example">
+      <h2>What you might find</h2>
+      <pre><span class="k">"@type"</span>: <span class="v">"Recipe"</span>,
+<span class="k">"name"</span>: <span class="v">"Classic Tiramisu"</span>,
+<span class="k">"author"</span>: { <span class="k">"@type"</span>: <span class="v">"Person"</span>, <span class="k">"name"</span>: <span class="v">"Julia Child"</span> },
+<span class="k">"recipeIngredient"</span>: [
+  <span class="s">"500g mascarpone"</span>,
+  <span class="s">"4 egg yolks"</span>,
+  <span class="s">"100g sugar"</span>
+],
+<span class="k">"totalTime"</span>: <span class="v">"PT45M"</span>,
+<span class="k">"aggregateRating"</span>: { <span class="k">"ratingValue"</span>: <span class="v">"4.8"</span>, <span class="k">"reviewCount"</span>: <span class="v">"312"</span> }</pre>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="fi">📰</div>
+        <h3>Articles</h3>
+        <p>Author, publish date, word count, and topic tags hidden in every news article.</p>
+      </div>
+      <div class="feature">
+        <div class="fi">🛒</div>
+        <h3>Products</h3>
+        <p>Exact pricing, availability, SKUs, and review counts that aren't always shown.</p>
+      </div>
+      <div class="feature">
+        <div class="fi">🍳</div>
+        <h3>Recipes</h3>
+        <p>Full ingredient lists, cook times, calorie counts, and structured instructions.</p>
+      </div>
+      <div class="feature">
+        <div class="fi">📅</div>
+        <h3>Events</h3>
+        <p>Start times, locations, ticket links, and organizer details as structured data.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      Part of <a href="../">Edge Toolkit</a> · MIT Licensed ·
+      <a href="https://github.com/edgeof8">github.com/edgeof8</a>
+    </div>
+  </div>
+
+  <script>
+    const bmUrl = "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/schema-peek/schema-peek.js?v='+Date.now();document.body.appendChild(s);})()";
+    const bm = document.getElementById('bm');
+    bm.href = bmUrl;
+    bm.addEventListener('click', e => {
+      e.preventDefault();
+      navigator.clipboard.writeText(bmUrl).then(() => {
+        const orig = bm.textContent;
+        bm.textContent = '✓ Copied!';
+        setTimeout(() => { bm.textContent = orig; }, 1400);
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = bmUrl;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        alert('Bookmarklet code copied! Create a new bookmark and paste it as the URL.');
+      });
+    });
+  </script>
+</body>
+</html>
