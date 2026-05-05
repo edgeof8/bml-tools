@@ -4,13 +4,22 @@ const path = require('path');
 const { minify } = require('terser');
 const { execSync } = require('child_process');
 
+const BASE_URL = 'https://edgeof8.github.io';
+
 async function build() {
   console.log('🏗️  Edge Toolkit: Master Builder Starting...');
 
-  // 1. Discover active tools (folders with a PRD.md and a main JS file)
+  // Load per-tool display config (icon, desc, meta tags)
+  const toolsConfigPath = path.join(__dirname, 'tools.json');
+  const toolsConfig = fs.existsSync(toolsConfigPath)
+    ? JSON.parse(fs.readFileSync(toolsConfigPath, 'utf8'))
+    : [];
+  const configById = Object.fromEntries(toolsConfig.map(t => [t.id, t]));
+
+  // Discover active tools: folders with a PRD.md and a matching <folder>.js file
   const allDirs = fs.readdirSync(__dirname, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory() && !dirent.name.startsWith('.') && dirent.name !== 'node_modules')
-    .map(dirent => dirent.name);
+    .filter(d => d.isDirectory() && !d.name.startsWith('.') && d.name !== 'node_modules')
+    .map(d => d.name);
 
   const tools = [];
 
@@ -18,34 +27,39 @@ async function build() {
     const prdPath = path.join(__dirname, dir, 'PRD.md');
     if (!fs.existsSync(prdPath)) continue;
 
-    // Assume the main JS file follows the pattern: folder/folder.js
-    const jsFile = path.join(dir, `${dir}.js`);
-    const jsPath = path.join(__dirname, jsFile);
-    
-    if (fs.existsSync(jsPath)) {
-      const prdContent = fs.readFileSync(prdPath, 'utf8');
-      
-      // Extract Name: looking for "# PRD: Name" or "**PRD: Name**"
-      const nameMatch = prdContent.match(/(?:PRD|Document):\s*\**([\w-]+)\**/i);
-      const toolName = nameMatch ? nameMatch[1] : dir;
+    const jsPath = path.join(__dirname, dir, `${dir}.js`);
+    if (!fs.existsSync(jsPath)) continue;
 
-      // Extract Description: find the first bold line that provides a summary
+    const cfg = configById[dir] || {};
+    const prdContent = fs.readFileSync(prdPath, 'utf8');
+
+    // Fall back to PRD.md parsing if no tools.json entry
+    let name = cfg.name || dir;
+    let desc = cfg.desc;
+    if (!desc) {
       const lines = prdContent.split('\n');
-      let toolDesc = `Markdown utility for ${toolName}`;
       for (const line of lines) {
         const m = line.match(/^\*\*([^*]+)\*\*/);
-        if (m && !line.toLowerCase().includes('prd:')) {
-          toolDesc = m[1].trim();
-          break;
-        }
+        if (m && !line.toLowerCase().includes('prd:')) { desc = m[1].trim(); break; }
       }
-
-      tools.push({ id: dir, file: jsFile, folder: dir, name: toolName, desc: toolDesc });
-      console.log(`🔎 Found active tool: ${toolName}`);
+      desc = desc || `Markdown utility for ${name}`;
     }
+
+    tools.push({
+      id: dir,
+      jsPath,
+      name,
+      desc,
+      icon: cfg.icon || '🔧',
+      meta: cfg.meta || [],
+      pageUrl: `${BASE_URL}/${dir}/`
+    });
+
+    console.log(`🔎 Found: ${name}`);
   }
 
-  let landingLinksHtml = '';
+  let loadersJs = '';
+  let toolCardsHtml = '';
   let bookmarkFolderHtml = `<!DOCTYPE NETSCAPE-Bookmark-file-1>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 <TITLE>Bookmarks</TITLE>
@@ -55,80 +69,85 @@ async function build() {
     <DL><p>\n`;
 
   for (const tool of tools) {
-    const toolDir = path.join(__dirname, tool.folder);
+    const toolDir = path.dirname(tool.jsPath);
     const packageJsonPath = path.join(toolDir, 'package.json');
 
     if (fs.existsSync(packageJsonPath)) {
       console.log(`📦 Installing dependencies for ${tool.name}...`);
       try {
         execSync('npm install', { cwd: toolDir, stdio: 'inherit' });
-      } catch (error) {
-        console.error(`❌ Failed to install dependencies for ${tool.name}:`, error.message);
+      } catch (err) {
+        console.error(`❌ npm install failed for ${tool.name}:`, err.message);
       }
     }
-    
-    const rawCode = fs.readFileSync(path.join(__dirname, tool.file), 'utf8');
-    
-    // 1. Minify the code
+
+    const rawCode = fs.readFileSync(tool.jsPath, 'utf8');
+
     const minified = await minify(rawCode, {
       compress: { drop_console: true, passes: 2 },
       mangle: true
     });
 
-    // 2. Wrap in bookmarklet protocol & URI encode specifically for bookmarks
     const safeCode = encodeURIComponent(minified.code)
       .replace(/'/g, '%27')
       .replace(/"/g, '%22');
-    
+
     const bookmarkletUrl = `javascript:(function(){${safeCode}})();`;
 
-    // 3. Update the tool's own index.html if it exists
+    // Loader URL for remote delivery (stays tiny, always fetches latest)
+    const loaderUrl = `javascript:(function(){var s=document.createElement('script');s.src='${BASE_URL}/${tool.id}/${tool.id}.js?v='+Date.now();document.body.appendChild(s);})()`;
+
+    // Update the tool's own index.html bookmarklet hrefs
     const subIndexPath = path.join(toolDir, 'index.html');
     if (fs.existsSync(subIndexPath)) {
-      let subIndexHtml = fs.readFileSync(subIndexPath, 'utf8');
-      // Replace any existing javascript:... bookmarklet links
-      const updatedHtml = subIndexHtml.replace(/href="javascript:[^"]*"/g, `href="${bookmarkletUrl}"`);
-      if (subIndexHtml !== updatedHtml) {
-        fs.writeFileSync(subIndexPath, updatedHtml);
-        console.log(`   📝 Updated ${tool.folder}/index.html`);
+      let html = fs.readFileSync(subIndexPath, 'utf8');
+      const updated = html.replace(/href="javascript:[^"]*"/g, `href="${bookmarkletUrl}"`);
+      if (html !== updated) {
+        fs.writeFileSync(subIndexPath, updated);
+        console.log(`   📝 Updated ${tool.id}/index.html`);
       }
     }
 
-    // 4. Add to the Landing Page HTML chunk
-    landingLinksHtml += `
+    const metaHtml = tool.meta.length
+      ? `<div class="meta">${tool.meta.map(t => `<span>${t}</span>`).join(' • ')}</div>`
+      : '';
+
+    toolCardsHtml += `
       <div class="tool-card">
+        <div class="icon">${tool.icon}</div>
         <h3>${tool.name}</h3>
-        <p>${tool.desc}</p>
-        <a class="bookmarklet" href="${bookmarkletUrl}">${tool.name}</a>
-        <span class="drag-hint">Drag to bookmarks bar</span>
+        <p class="desc">${tool.desc}</p>
+        ${metaHtml}
+        <div class="actions">
+          <a href="${tool.pageUrl}" class="tool-link">Visit page</a>
+          <a data-tool="${tool.id}" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
+        </div>
       </div>\n`;
-    
-    // 5. Add to the Bookmark Import File HTML chunk
+
+    loadersJs += `      '${tool.id}': "${loaderUrl}",\n`;
+
     bookmarkFolderHtml += `        <DT><A HREF="${bookmarkletUrl}">${tool.name}</A>\n`;
-    
+
     console.log(`✅ Built: ${tool.name} (${(bookmarkletUrl.length / 1024).toFixed(2)} kb)`);
   }
-  
-  bookmarkFolderHtml += `    </DL><p>\n</DL><p>`;
-  
-  // 6. Write the Bookmark Import File
-  fs.writeFileSync(path.join(__dirname, 'edge-bookmarks.html'), bookmarkFolderHtml);
-  console.log('📁 Created edge-bookmarks.html (Ready for browser import)');
-  
-  // 7. Generate the Landing Page
-  const templatePath = path.join(__dirname, 'template.html');
-  let template;
-  if (fs.existsSync(templatePath)) {
-    template = fs.readFileSync(templatePath, 'utf8');
-  } else {
-    // Fallback: use root index.html as a template if template.html is missing
-    template = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-  }
 
-  const finalHtml = template.replace('<!-- INJECT_TOOLS_HERE -->', landingLinksHtml);
+  bookmarkFolderHtml += `    </DL><p>\n</DL><p>`;
+  fs.writeFileSync(path.join(__dirname, 'edge-bookmarks.html'), bookmarkFolderHtml);
+  console.log('📁 Created edge-bookmarks.html');
+
+  // Generate landing page from template
+  const templatePath = path.join(__dirname, 'template.html');
+  let template = fs.existsSync(templatePath)
+    ? fs.readFileSync(templatePath, 'utf8')
+    : fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+
+  const finalHtml = template
+    .replace('<!-- INJECT_TOOLS_HERE -->', toolCardsHtml)
+    .replace('<!-- INJECT_LOADERS_HERE -->', loadersJs.trimEnd());
+
   fs.writeFileSync(path.join(__dirname, 'index.html'), finalHtml);
-  console.log('🌐 Created index.html (Landing page updated)');
-  
+  console.log('🌐 Created index.html');
+
   console.log('🚀 Build complete!');
 }
 

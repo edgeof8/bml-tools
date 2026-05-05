@@ -3,55 +3,268 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edge Toolkit — Markdown & AI Utilities</title>
+  <title>Edge Toolkit — Zero-Install Bookmarklets</title>
+  <meta name="description" content="A curated collection of beautiful, privacy-first bookmarklets for researchers, writers, AI power users, and anyone who hates friction on the web.">
   <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --success: #238636;
+      --hover: #1f6feb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0d1117; color: #e6edf3; margin: 0; padding: 4rem 2rem;
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-    }
-    h1 { font-size: 3rem; color: #58a6ff; margin-bottom: 0.5rem; }
-    .tagline { color: #8b949e; font-size: 1.2rem; margin-bottom: 3rem; }
-
-    .download-folder {
-      background: #161b22; border: 1px solid #30363d; border-radius: 8px;
-      padding: 1.5rem; margin-bottom: 4rem; max-width: 500px;
-    }
-    .download-folder a {
-      display: inline-block; background: #238636; color: white;
-      text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 6px;
-      font-weight: bold; margin-top: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 3rem 1.5rem 6rem;
     }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; width: 100%; max-width: 900px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .hero { text-align: center; margin-bottom: 4rem; }
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+      background: linear-gradient(90deg, #58a6ff, #a371f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero .tagline {
+      font-size: 1.35rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero .badges { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .badge {
+      background: #21262d;
+      color: #8b949e;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    .bundle {
+      background: linear-gradient(135deg, #161b22, #21262d);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.25rem 2.5rem;
+      margin-bottom: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .bundle-content { flex: 1; min-width: 280px; }
+    .bundle h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .bundle p { color: var(--text-muted); font-size: 1rem; }
+    .bundle .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--success);
+      color: white;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(35, 134, 54, 0.4);
+    }
+    .bundle .btn:hover { background: #2ea043; transform: translateY(-2px); }
+
+    .section-label {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #6e7681;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
     .tool-card {
-      background: #161b22; border: 1px solid #30363d; border-radius: 8px;
-      padding: 1.5rem; display: flex; flex-direction: column; align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
     }
-    .tool-card h3 { margin: 0 0 0.5rem 0; color: #e6edf3; }
-    .tool-card p { color: #8b949e; font-size: 0.9rem; margin: 0 0 1.5rem 0; line-height: 1.4; }
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(88, 166, 255, 0.1);
+    }
+    .tool-card .icon { font-size: 2.25rem; margin-bottom: 1rem; line-height: 1; }
+    .tool-card h3 { font-size: 1.35rem; margin-bottom: 0.5rem; color: var(--text); }
+    .tool-card .desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+    .tool-card .meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: #6e7681;
+      margin-bottom: 1.25rem;
+    }
+    .tool-card .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
     .bookmarklet {
-      display: inline-block; padding: 0.6rem 1.5rem; background: #1f6feb; color: #fff;
-      font-weight: bold; border-radius: 6px; text-decoration: none; cursor: grab;
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.1rem;
+      background: #238636;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1px solid #2ea043;
+      cursor: grab;
+      user-select: none;
     }
+    .bookmarklet:hover { background: #2ea043; box-shadow: 0 0 20px rgba(46, 160, 67, 0.5); }
+    .bookmarklet:active { cursor: grabbing; transform: scale(0.97); }
+
+    .tool-link {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.1rem;
+      background: transparent;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .tool-link:hover { background: #21262d; border-color: var(--accent); }
+
+    .footer {
+      margin-top: 5rem;
+      text-align: center;
+      color: #6e7681;
+      font-size: 0.9rem;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
+  <div class="container">
 
-  <h1>Edge Toolkit</h1>
-  <p class="tagline">Zero-install bookmarklets for PKM, Markdown, and AI workflows.</p>
+    <div class="hero">
+      <h1>Edge Toolkit</h1>
+      <p class="tagline">Beautiful, zero-install bookmarklets.<br>Built for researchers, writers, and power users who hate friction.</p>
+      <div class="badges">
+        <span class="badge">100% Client-Side</span>
+        <span class="badge">Privacy-First</span>
+        <span class="badge">No Extensions</span>
+        <span class="badge">No Accounts</span>
+      </div>
+    </div>
 
-  <div class="download-folder">
-    <h3>📦 Get the whole suite</h3>
-    <p style="color:#8b949e; font-size:0.9rem;">Download the bookmarks file and import it directly into Chrome, Safari, or Firefox to get the "Edge Toolkit" folder.</p>
-    <a href="edge-bookmarks.html" download>Download Bookmarks File</a>
+    <div class="bundle">
+      <div class="bundle-content">
+        <h3>📦 One-Click Install — All Tools</h3>
+        <p>Download the bookmarks HTML file and import it into your browser. Get the entire Edge Toolkit folder instantly.</p>
+      </div>
+      <a href="edge-bookmarks.html" download class="btn">⬇️ Download Bookmarks File</a>
+    </div>
+
+    <div class="section-label">The Tools</div>
+
+    <div class="grid">
+      <!-- INJECT_TOOLS_HERE -->
+    </div>
+
+    <div class="footer">
+      Built for the open web. All processing happens in your browser.<br>
+      <a href="https://github.com/edgeof8">github.com/edgeof8</a> &nbsp;·&nbsp;
+      <a href="https://github.com/edgeof8/bml-tools">Source on GitHub</a>
+    </div>
+
   </div>
 
-  <p style="color:#6e7681; margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Or drag individual tools</p>
+  <script>
+    const bookmarkletLoaders = {
+      <!-- INJECT_LOADERS_HERE -->
+    };
 
-  <div class="grid">
-    <!-- INJECT_TOOLS_HERE -->
-  </div>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.bookmarklet[data-tool]').forEach(a => {
+        const url = bookmarkletLoaders[a.dataset.tool];
+        if (url) a.href = url;
+      });
+    });
 
+    function handleBookmarkletClick(e, btn) {
+      e.preventDefault();
+      const code = bookmarkletLoaders[btn.dataset.tool];
+      if (!code) return;
+
+      const flash = () => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.style.background = '#2ea043';
+        setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 1400);
+      };
+
+      navigator.clipboard.writeText(code).then(flash).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        flash();
+      });
+    }
+
+    let konami = '';
+    document.addEventListener('keydown', e => {
+      konami += e.key;
+      if (konami.length > 10) konami = konami.slice(-10);
+      if (konami === 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba') {
+        document.body.style.transition = 'filter 0.6s';
+        document.body.style.filter = 'hue-rotate(180deg)';
+        setTimeout(() => document.body.style.filter = '', 1200);
+        konami = '';
+      }
+    });
+  </script>
 </body>
 </html>

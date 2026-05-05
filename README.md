@@ -1,6 +1,6 @@
 # Edge Toolkit
 
-**10 beautiful, zero-install bookmarklets for researchers, writers, AI power users, and anyone who hates friction on the web.**
+**11 beautiful, zero-install bookmarklets for researchers, writers, AI power users, and anyone who hates friction on the web.**
 
 All tools are **100% client-side**, **privacy-first**, and require **no extensions, no accounts, and no data leaving your browser**.
 
@@ -25,6 +25,7 @@ All tools are **100% client-side**, **privacy-first**, and require **no extensio
 | **md-memo**| Save any article or blog post as clean Markdown + YAML frontmatter          | PKM (Obsidian/Notion)     |
 | **multi-peek** | Choose from multiple archives (archive.is, Wayback, archive.ph, etc.) to bypass paywalls | Researchers, journalists  |
 | **peek**   | Instant redirect to `archive.is/latest/` for paywalled or deleted content    | Quick archive access      |
+| **quote**  | Capture selected text as a Markdown blockquote with YAML citation metadata   | Researchers, annotators   |
 | **reader** | Distraction-free reading mode — strips ads, sidebars, popups for clean view  | Long-form reading         |
 | **stats**  | Instant page statistics: word count, reading time, headings, links, images   | Writers, editors          |
 | **toc**    | Generate a beautiful standalone Table of Contents page from any long article | Documentation, research   |

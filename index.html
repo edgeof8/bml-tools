@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edge Toolkit — 10 Zero-Install Bookmarklets</title>
+  <title>Edge Toolkit — 11 Zero-Install Bookmarklets</title>
   <meta name="description" content="A curated collection of beautiful, privacy-first bookmarklets for researchers, writers, AI power users, and anyone who hates friction on the web.">
   <style>
     :root {
@@ -225,7 +225,7 @@
     <!-- Hero -->
     <div class="hero">
       <h1>Edge Toolkit</h1>
-      <p class="tagline">10 beautiful, zero-install bookmarklets.<br>Built for researchers, writers, and power users who hate friction.</p>
+      <p class="tagline">11 beautiful, zero-install bookmarklets.<br>Built for researchers, writers, and power users who hate friction.</p>
       
       <div class="badges">
         <span class="badge">100% Client-Side</span>
@@ -238,7 +238,7 @@
     <!-- Bundle -->
     <div class="bundle">
       <div class="bundle-content">
-        <h3>📦 One-Click Install — All 10 Tools</h3>
+        <h3>📦 One-Click Install — All 11 Tools</h3>
         <p>Download the bookmarks HTML file and import it into your browser. Get the entire Edge Toolkit folder instantly.</p>
       </div>
       <a href="edge-bookmarks.html" download class="btn">
@@ -259,7 +259,7 @@
         <div class="meta"><span>AI Chats</span> • <span>Markdown</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/bttn/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('bttn'); return false;">Drag to bar</a>
+          <a data-tool="bttn" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -271,7 +271,7 @@
         <div class="meta"><span>Citations</span> • <span>5 Formats</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/cite/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('cite'); return false;">Drag to bar</a>
+          <a data-tool="cite" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -283,7 +283,7 @@
         <div class="meta"><span>Articles</span> • <span>YAML</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/md-memo/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('md-memo'); return false;">Drag to bar</a>
+          <a data-tool="md-memo" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -295,7 +295,7 @@
         <div class="meta"><span>Archives</span> • <span>Multi</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/multi-peek/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('multi-peek'); return false;">Drag to bar</a>
+          <a data-tool="multi-peek" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -307,7 +307,7 @@
         <div class="meta"><span>Paywalls</span> • <span>Archive</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/peek/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('peek'); return false;">Drag to bar</a>
+          <a data-tool="peek" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -319,7 +319,7 @@
         <div class="meta"><span>Reading</span> • <span>Clean</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/reader/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('reader'); return false;">Drag to bar</a>
+          <a data-tool="reader" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -331,7 +331,7 @@
         <div class="meta"><span>Analytics</span> • <span>Insights</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/stats/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('stats'); return false;">Drag to bar</a>
+          <a data-tool="stats" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -343,7 +343,7 @@
         <div class="meta"><span>Navigation</span> • <span>Long-form</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/toc/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('toc'); return false;">Drag to bar</a>
+          <a data-tool="toc" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -355,7 +355,7 @@
         <div class="meta"><span>Threads</span> • <span>X/Twitter</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/x-memo/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('x-memo'); return false;">Drag to bar</a>
+          <a data-tool="x-memo" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -367,7 +367,19 @@
         <div class="meta"><span>Video</span> • <span>Transcript</span></div>
         <div class="actions">
           <a href="https://edgeof8.github.io/yt-memo/" class="tool-link">Visit page</a>
-          <a href="#" class="bookmarklet" onclick="copyBookmarklet('yt-memo'); return false;">Drag to bar</a>
+          <a data-tool="yt-memo" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- quote -->
+      <div class="tool-card">
+        <div class="icon">💬</div>
+        <h3>quote</h3>
+        <p class="desc">Select any text on a page and capture it as a Markdown blockquote with full citation — perfect for research notes.</p>
+        <div class="meta"><span>Selection</span> • <span>Citations</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/quote/" class="tool-link">Visit page</a>
+          <a data-tool="quote" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
         </div>
       </div>
 
@@ -382,50 +394,55 @@
   </div>
 
   <script>
-    // Simple copy helper for demo bookmarklets (in real deployment these would be the real minified loaders)
     const bookmarkletLoaders = {
-      'bttn': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/bttn/bttn.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'cite': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/cite/cite.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'md-memo': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/md-memo/md-memo.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'multi-peek': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/multi-peek/multi-peek.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'peek': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/peek/peek.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'reader': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/reader/reader.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'stats': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/stats/stats.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'toc': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/toc/toc.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'x-memo': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/x-memo/x-memo.js?v=\'+Date.now();document.body.appendChild(s);})();',
-      'yt-memo': 'javascript:(function(){var s=document.createElement(\'script\');s.src=\'https://edgeof8.github.io/yt-memo/yt-memo.js?v=\'+Date.now();document.body.appendChild(s);})();'
+      'bttn':       "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/bttn/bttn.js?v='+Date.now();document.body.appendChild(s);})()",
+      'cite':       "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/cite/cite.js?v='+Date.now();document.body.appendChild(s);})()",
+      'md-memo':    "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/md-memo/md-memo.js?v='+Date.now();document.body.appendChild(s);})()",
+      'multi-peek': "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/multi-peek/multi-peek.js?v='+Date.now();document.body.appendChild(s);})()",
+      'peek':       "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/peek/peek.js?v='+Date.now();document.body.appendChild(s);})()",
+      'reader':     "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/reader/reader.js?v='+Date.now();document.body.appendChild(s);})()",
+      'stats':      "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/stats/stats.js?v='+Date.now();document.body.appendChild(s);})()",
+      'toc':        "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/toc/toc.js?v='+Date.now();document.body.appendChild(s);})()",
+      'x-memo':     "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/x-memo/x-memo.js?v='+Date.now();document.body.appendChild(s);})()",
+      'yt-memo':    "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/yt-memo/yt-memo.js?v='+Date.now();document.body.appendChild(s);})()",
+      'quote':      "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/quote/quote.js?v='+Date.now();document.body.appendChild(s);})()"
     };
 
-    function copyBookmarklet(tool) {
-      const code = bookmarkletLoaders[tool];
+    // Wire up real bookmarklet hrefs so drag-to-bar works
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.bookmarklet[data-tool]').forEach(a => {
+        const url = bookmarkletLoaders[a.dataset.tool];
+        if (url) a.href = url;
+      });
+    });
+
+    function handleBookmarkletClick(e, btn) {
+      e.preventDefault();
+      const code = bookmarkletLoaders[btn.dataset.tool];
       if (!code) return;
-      
-      navigator.clipboard.writeText(code).then(() => {
-        const btns = document.querySelectorAll('.bookmarklet');
-        btns.forEach(b => {
-          if (b.textContent.includes('Drag')) {
-            const orig = b.textContent;
-            b.textContent = '✓ Copied!';
-            b.style.background = '#2ea043';
-            setTimeout(() => {
-              b.textContent = orig;
-              b.style.background = '#238636';
-            }, 1400);
-          }
-        });
-      }).catch(() => {
-        // Fallback
+
+      const flash = () => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.style.background = '#2ea043';
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.background = '';
+        }, 1400);
+      };
+
+      navigator.clipboard.writeText(code).then(flash).catch(() => {
         const ta = document.createElement('textarea');
         ta.value = code;
         document.body.appendChild(ta);
         ta.select();
         document.execCommand('copy');
         ta.remove();
-        alert('Bookmarklet code copied! Paste it as the URL of a new bookmark.');
+        flash();
       });
     }
 
-    // Easter egg: Konami code for fun
+    // Easter egg: Konami code
     let konami = '';
     document.addEventListener('keydown', e => {
       konami += e.key;

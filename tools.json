@@ -1,0 +1,79 @@
+[
+  {
+    "id": "bttn",
+    "icon": "📋",
+    "name": "bttn",
+    "desc": "Copy any AI conversation (Claude, ChatGPT, Grok, AI Studio) to clean Markdown with one click.",
+    "meta": ["AI Chats", "Markdown"]
+  },
+  {
+    "id": "cite",
+    "icon": "📚",
+    "name": "cite",
+    "desc": "One-click academic citations in APA, MLA, Chicago, BibTeX, and Plain Text from any webpage.",
+    "meta": ["Citations", "5 Formats"]
+  },
+  {
+    "id": "md-memo",
+    "icon": "📝",
+    "name": "md-memo",
+    "desc": "Save any article or blog post as clean Markdown with YAML frontmatter — ready for Obsidian or Notion.",
+    "meta": ["Articles", "YAML"]
+  },
+  {
+    "id": "multi-peek",
+    "icon": "🗂️",
+    "name": "multi-peek",
+    "desc": "Choose from multiple archiving services (archive.is, Wayback Machine, etc.) to bypass paywalls.",
+    "meta": ["Archives", "Multi"]
+  },
+  {
+    "id": "peek",
+    "icon": "🔍",
+    "name": "peek",
+    "desc": "Instantly redirect any page to archive.is/latest/ — bypass paywalls and recover deleted content.",
+    "meta": ["Paywalls", "Archive"]
+  },
+  {
+    "id": "quote",
+    "icon": "💬",
+    "name": "quote",
+    "desc": "Select any text on a page and capture it as a Markdown blockquote with full citation — perfect for research notes.",
+    "meta": ["Selection", "Citations"]
+  },
+  {
+    "id": "reader",
+    "icon": "📖",
+    "name": "reader",
+    "desc": "Distraction-free reading mode. Strips ads, sidebars, and clutter for a clean, Kindle-like experience.",
+    "meta": ["Reading", "Clean"]
+  },
+  {
+    "id": "stats",
+    "icon": "📊",
+    "name": "stats",
+    "desc": "Instant page statistics: word count, reading time, heading structure, link density, and more.",
+    "meta": ["Analytics", "Insights"]
+  },
+  {
+    "id": "toc",
+    "icon": "📑",
+    "name": "toc",
+    "desc": "Generate a beautiful, standalone Table of Contents page from any long article or documentation.",
+    "meta": ["Navigation", "Long-form"]
+  },
+  {
+    "id": "x-memo",
+    "icon": "🐦",
+    "name": "x-memo",
+    "desc": "Export any X/Twitter thread to clean Markdown with YAML frontmatter — perfect for your second brain.",
+    "meta": ["Threads", "X/Twitter"]
+  },
+  {
+    "id": "yt-memo",
+    "icon": "▶️",
+    "name": "yt-memo",
+    "desc": "Turn any YouTube video into Markdown with title, chapters, description, and full transcript.",
+    "meta": ["Video", "Transcript"]
+  }
+]
