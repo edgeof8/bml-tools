@@ -28,3 +28,15 @@
 [submodule "yt-memo"]
 	path = yt-memo
 	url = https://github.com/edgeof8/yt-memo.git
+[submodule "quote"]
+	path = quote
+	url = https://github.com/edgeof8/quote.git
+[submodule "dark"]
+	path = dark
+	url = https://github.com/edgeof8/dark.git
+[submodule "links"]
+	path = links
+	url = https://github.com/edgeof8/links.git
+[submodule "reddit-memo"]
+	path = reddit-memo
+	url = https://github.com/edgeof8/reddit-memo.git
