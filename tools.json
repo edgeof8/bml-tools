@@ -75,5 +75,26 @@
     "name": "yt-memo",
     "desc": "Turn any YouTube video into Markdown with title, chapters, description, and full transcript.",
     "meta": ["Video", "Transcript"]
+  },
+  {
+    "id": "dark",
+    "icon": "🌙",
+    "name": "dark",
+    "desc": "Toggle dark mode on any website. Images stay natural. One click on, one click off.",
+    "meta": ["Dark Mode", "Toggle"]
+  },
+  {
+    "id": "links",
+    "icon": "🔗",
+    "name": "links",
+    "desc": "Extract all external links from any page as a deduplicated Markdown list with YAML frontmatter.",
+    "meta": ["Links", "Markdown"]
+  },
+  {
+    "id": "reddit-memo",
+    "icon": "🟠",
+    "name": "reddit-memo",
+    "desc": "Export any Reddit thread — post body, comments, and nested replies — to clean Markdown with one click.",
+    "meta": ["Reddit", "Threads"]
   }
 ]
