@@ -1,0 +1,16 @@
+{
+  "name": "bml-tools",
+  "version": "1.0.0",
+  "description": "Edge Toolkit — zero-install bookmarklets for researchers, writers, and AI power users",
+  "private": true,
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch"
+  },
+  "devDependencies": {
+    "terser": "^5.39.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
