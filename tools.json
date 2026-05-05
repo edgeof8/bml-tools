@@ -96,5 +96,33 @@
     "name": "reddit-memo",
     "desc": "Export any Reddit thread — post body, comments, and nested replies — to clean Markdown with one click.",
     "meta": ["Reddit", "Threads"]
+  },
+  {
+    "id": "table-memo",
+    "icon": "🗃️",
+    "name": "table-memo",
+    "desc": "Detect the most data-rich HTML table on any page and convert it instantly to clean Markdown.",
+    "meta": ["Tables", "Extraction"]
+  },
+  {
+    "id": "schema-peek",
+    "icon": "🔍",
+    "name": "schema-peek",
+    "desc": "Inspect hidden JSON-LD / Schema.org metadata (articles, recipes, products) in a readable overlay.",
+    "meta": ["SEO", "JSON-LD"]
+  },
+  {
+    "id": "llm-prep",
+    "icon": "🤖",
+    "name": "llm-prep",
+    "desc": "Extract article content and wrap it in a ready-to-paste AI prompt for Claude or ChatGPT.",
+    "meta": ["AI", "Prompting"]
+  },
+  {
+    "id": "highlight-memo",
+    "icon": "🖍️",
+    "name": "highlight-memo",
+    "desc": "Collect multiple highlights while reading and export them all at once as a Markdown list.",
+    "meta": ["Research", "Selection"]
   }
 ]
