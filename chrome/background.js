@@ -22,6 +22,7 @@ async function loadDefaultScripts() {
       // minimal placeholder that alerts the user.
       const codeUrl = chrome.runtime.getURL(entry.path);
       const codeResp = await fetch(codeUrl);
+      if (!codeResp.ok) throw new Error(`HTTP ${codeResp.status}`);
       const code = await codeResp.text();
       scripts.push({ id: entry.id, title: entry.title, code });
     } catch (e) {
