@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BML Tools - Script Editor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #121212; color: #e0e0e0; }
+    textarea { font-family: 'Courier New', Courier, monospace; }
+  </style>
+</head>
+<body class="h-screen flex flex-col font-sans">
+  
+  <header class="bg-zinc-900 border-b border-zinc-700 p-4 shadow-md flex justify-between items-center">
+    <h1 class="text-xl font-bold tracking-wide text-white">⚙️ BML Tools</h1>
+    <button id="btn-new" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded font-medium text-sm transition">
+      + New Script
+    </button>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar List -->
+    <aside class="w-64 bg-zinc-800 border-r border-zinc-700 flex flex-col">
+      <div id="script-list" class="flex-1 overflow-y-auto p-2 space-y-1">
+        <!-- Scripts injected here via JS -->
+      </div>
+    </aside>
+
+    <!-- Editor Area -->
+    <main class="flex-1 flex flex-col p-6 bg-zinc-900 hidden" id="editor-area">
+      <div class="flex justify-between items-center mb-4">
+        <input type="text" id="script-title" class="bg-transparent border-b border-zinc-600 focus:border-blue-500 outline-none text-2xl font-bold w-1/2 pb-1" placeholder="Script Name (e.g., Send to Notion)">
+        <div>
+          <button id="btn-delete" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded text-sm mr-2 transition">Delete</button>
+          <button id="btn-save" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded text-sm transition">Save Script</button>
+        </div>
+      </div>
+      <p class="text-zinc-400 text-sm mb-2">Write your vanilla JavaScript below. It will execute in the context of the active tab.</p>
+      <textarea id="script-code" class="flex-1 bg-zinc-950 border border-zinc-700 rounded p-4 text-green-400 outline-none focus:border-blue-500 resize-none" spellcheck="false" placeholder="// Write your JS here..."></textarea>
+      
+      <input type="hidden" id="script-id">
+    </main>
+
+    <!-- Empty State -->
+    <main class="flex-1 flex items-center justify-center bg-zinc-900" id="empty-state">
+      <p class="text-zinc-500">Select a script from the sidebar or create a new one.</p>
+    </main>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "BML Tools",
+  "version": "1.0.0",
+  "description": "Zero-bloat script runner for note-taking, AI, and PKM workflows.",
+  "permissions":[
+    "contextMenus",
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_title": "BML Settings"
+  },
+  "icons": {
+    "128": "icon.png"
+  }
+}
