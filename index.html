@@ -383,6 +383,42 @@
         </div>
       </div>
 
+      <!-- dark -->
+      <div class="tool-card">
+        <div class="icon">🌙</div>
+        <h3>dark</h3>
+        <p class="desc">Toggle dark mode on any website. Images stay natural. One click on, one click off.</p>
+        <div class="meta"><span>Dark Mode</span> • <span>Toggle</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/dark/" class="tool-link">Visit page</a>
+          <a data-tool="dark" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- links -->
+      <div class="tool-card">
+        <div class="icon">🔗</div>
+        <h3>links</h3>
+        <p class="desc">Extract all external links from any page as a deduplicated Markdown list with YAML frontmatter.</p>
+        <div class="meta"><span>Links</span> • <span>Markdown</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/links/" class="tool-link">Visit page</a>
+          <a data-tool="links" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
+        </div>
+      </div>
+
+      <!-- reddit-memo -->
+      <div class="tool-card">
+        <div class="icon">🟠</div>
+        <h3>reddit-memo</h3>
+        <p class="desc">Export any Reddit thread — post body, comments, and nested replies — to clean Markdown with one click.</p>
+        <div class="meta"><span>Reddit</span> • <span>Threads</span></div>
+        <div class="actions">
+          <a href="https://edgeof8.github.io/reddit-memo/" class="tool-link">Visit page</a>
+          <a data-tool="reddit-memo" class="bookmarklet" onclick="handleBookmarkletClick(event, this)">⬇ Drag to bar</a>
+        </div>
+      </div>
+
     </div>
 
     <div class="footer">
@@ -405,7 +441,10 @@
       'toc':        "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/toc/toc.js?v='+Date.now();document.body.appendChild(s);})()",
       'x-memo':     "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/x-memo/x-memo.js?v='+Date.now();document.body.appendChild(s);})()",
       'yt-memo':    "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/yt-memo/yt-memo.js?v='+Date.now();document.body.appendChild(s);})()",
-      'quote':      "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/quote/quote.js?v='+Date.now();document.body.appendChild(s);})()"
+      'quote':       "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/quote/quote.js?v='+Date.now();document.body.appendChild(s);})()",
+      'dark':        "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/dark/dark.js?v='+Date.now();document.body.appendChild(s);})()",
+      'links':       "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/links/links.js?v='+Date.now();document.body.appendChild(s);})()",
+      'reddit-memo': "javascript:(function(){var s=document.createElement('script');s.src='https://edgeof8.github.io/reddit-memo/reddit-memo.js?v='+Date.now();document.body.appendChild(s);})()"
     };
 
     // Wire up real bookmarklet hrefs so drag-to-bar works
